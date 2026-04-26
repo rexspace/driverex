@@ -13,7 +13,7 @@ function Signup({ onLogin }) {
     setLoading(true)
     setError(null)
     try {
-      const response = await fetch('http://localhost:8000/signup', {
+      const response = await fetch('https://driverex-backend.onrender.com/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password })
@@ -24,7 +24,7 @@ function Signup({ onLogin }) {
         setLoading(false)
         return
       }
-      const loginRes = await fetch('http://localhost:8000/login', {
+      const loginRes = await fetch('https://driverex-backend.onrender.com/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })

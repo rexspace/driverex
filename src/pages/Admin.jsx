@@ -22,9 +22,9 @@ function Admin() {
 
   const fetchAll = async () => {
     const [statsRes, bookingsRes, carsRes] = await Promise.all([
-      fetch('http://localhost:8000/admin/stats'),
-      fetch('http://localhost:8000/admin/bookings'),
-      fetch('http://localhost:8000/cars'),
+      fetch('https://driverex-backend.onrender.com/admin/stats'),
+      fetch('https://driverex-backend.onrender.com/admin/bookings'),
+      fetch('https://driverex-backend.onrender.com/cars'),
     ])
     setStats(await statsRes.json())
     setBookings(await bookingsRes.json())
@@ -32,7 +32,7 @@ function Admin() {
   }
 
   const handleAddCar = async () => {
-    const response = await fetch('http://localhost:8000/cars', {
+    const response = await fetch('https://driverex-backend.onrender.com/cars', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newCar)
@@ -47,7 +47,7 @@ function Admin() {
 
   const handleDeleteCar = async (carId) => {
     if (!window.confirm('Delete this car?')) return
-    await fetch(`http://localhost:8000/cars/${carId}`, { method: 'DELETE' })
+    await fetch(`https://driverex-backend.onrender.com/cars/${carId}`, { method: 'DELETE' })
     fetchAll()
   }
   const handleEditCar = (car) => {
@@ -55,7 +55,7 @@ function Admin() {
   }
   
   const handleUpdateCar = async () => {
-    const response = await fetch(`http://localhost:8000/cars/${editingCar.id}`, {
+    const response = await fetch(`https://driverex-backend.onrender.com/cars/${editingCar.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

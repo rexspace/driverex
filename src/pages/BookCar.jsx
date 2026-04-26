@@ -16,7 +16,7 @@ function BookCar() {
   const token = localStorage.getItem('token')
 
   useEffect(() => {
-    fetch(`http://localhost:8000/cars/${carId}`)
+    fetch(`https://driverex-backend.onrender.com/cars/${carId}`)
       .then(res => res.json())
       .then(data => setCar(data))
   }, [carId])
@@ -47,7 +47,7 @@ function BookCar() {
     setLoading(true)
     setError(null)
     try {
-      const response = await fetch('http://localhost:8000/bookings', {
+      const response = await fetch('https://driverex-backend.onrender.com/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -7,7 +7,7 @@ function CarListings() {
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    fetch('http://localhost:8000/cars')
+    fetch('https://driverex-backend.onrender.com/cars')
       .then(response => {
         console.log('Response status:', response.status)
         return response.json()
@@ -40,7 +40,9 @@ function CarListings() {
     <div style={styles.section} id = "fleet">
       <div style={styles.header}>
         <h2 style={styles.title}>Our fleet</h2>
-        <span style={styles.link}>View all cars</span>
+        <span style={styles.link} onClick={() => {
+  document.getElementById('fleet')?.scrollIntoView({ behavior: 'smooth' })
+}}>View all cars</span>
       </div>
       <div style={styles.grid}>
         {cars.map(car => (
