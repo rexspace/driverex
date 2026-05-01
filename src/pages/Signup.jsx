@@ -93,9 +93,30 @@ function Signup({ onLogin }) {
             />
           </div>
 
-          <button style={styles.btn} onClick={handleSignup} disabled={loading}>
-            {loading ? 'Creating account...' : 'Create account →'}
-          </button>
+          <button 
+  style={{
+    ...styles.btn,
+    opacity: loading ? 0.7 : 1,
+    cursor: loading ? 'not-allowed' : 'pointer',
+  }} 
+  onClick={handleSignup} 
+  disabled={loading}
+>
+  {loading ? (
+    <span style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'}}>
+      <span style={{
+        width: '16px', height: '16px',
+        border: '2px solid rgba(0,0,0,0.2)',
+        borderTop: '2px solid #0a0a0a',
+        borderRadius: '50%',
+        animation: 'spin 0.8s linear infinite',
+        display: 'inline-block',
+      }}></span>
+      Creating account...
+    </span>
+  ) : 'Create account →'}
+  <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+</button>
 
           <p style={styles.switch}>
             Already have an account?{' '}

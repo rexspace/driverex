@@ -1,29 +1,54 @@
+import { useNavigate, useLocation } from 'react-router-dom'
+
 function Navbar({ user, onLogout }) {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const scrollToSection = (id) => {
+    if (location.pathname === '/') {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      navigate('/')
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+      }, 500)
+    }
+  }
+
   return (
     <nav style={styles.nav}>
-      <div style={styles.logo} onClick={() => window.location.href='/'}>
+      <div style={styles.logo} onClick={() => navigate('/')}>
         Drive<span style={styles.accent}>Rex</span>
       </div>
       <ul style={styles.links}>
-      <li style={styles.link} onClick={() => {
-  if (window.location.pathname === '/') {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  } else {
-    window.location.href = '/'
-  }
-}}>Home</li>
-  <li style={styles.link} onClick={() => {
-    const fleet = document.getElementById('fleet')
-    if (fleet) {
-      fleet.scrollIntoView({ behavior: 'smooth' })
-    } else {
-      window.location.href = '/'
-    }
-  }}>Fleet</li>
-  <li style={styles.link} onClick={() => window.location.href='/locations'}>Locations</li>
-  <li style={styles.link} onClick={() => window.location.href='/pricing'}>Pricing</li>
-  <li style={styles.link} onClick={() => window.location.href='/about'}>About</li>
-  <li style={styles.link} onClick={() => window.location.href='/admin'}>Admin</li>
+  <li style={styles.link} 
+    onMouseEnter={e => e.target.style.color = '#0a0a0a'}
+    onMouseLeave={e => e.target.style.color = '#6b7280'}
+    onClick={() => {
+      if (location.pathname === '/') {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      } else { navigate('/') }
+    }}>Home</li>
+  <li style={styles.link}
+    onMouseEnter={e => e.target.style.color = '#0a0a0a'}
+    onMouseLeave={e => e.target.style.color = '#6b7280'}
+    onClick={() => scrollToSection('fleet')}>Fleet</li>
+  <li style={styles.link}
+    onMouseEnter={e => e.target.style.color = '#0a0a0a'}
+    onMouseLeave={e => e.target.style.color = '#6b7280'}
+    onClick={() => navigate('/locations')}>Locations</li>
+  <li style={styles.link}
+    onMouseEnter={e => e.target.style.color = '#0a0a0a'}
+    onMouseLeave={e => e.target.style.color = '#6b7280'}
+    onClick={() => navigate('/pricing')}>Pricing</li>
+  <li style={styles.link}
+    onMouseEnter={e => e.target.style.color = '#0a0a0a'}
+    onMouseLeave={e => e.target.style.color = '#6b7280'}
+    onClick={() => navigate('/about')}>About</li>
+  <li style={styles.link}
+    onMouseEnter={e => e.target.style.color = '#0a0a0a'}
+    onMouseLeave={e => e.target.style.color = '#6b7280'}
+    onClick={() => navigate('/admin')}>Admin</li>
 </ul>
       {user ? (
         <div style={styles.userRow}>
@@ -32,10 +57,10 @@ function Navbar({ user, onLogout }) {
         </div>
       ) : (
         <div style={styles.authRow}>
-          <button style={styles.ghostBtn} onClick={() => window.location.href='/login'}>
+          <button style={styles.ghostBtn} onClick={() => navigate('/login')}>
             Sign in
           </button>
-          <button style={styles.primaryBtn} onClick={() => window.location.href='/signup'}>
+          <button style={styles.primaryBtn} onClick={() => navigate('/signup')}>
             Get started
           </button>
         </div>
@@ -43,6 +68,7 @@ function Navbar({ user, onLogout }) {
     </nav>
   )
 }
+
 const styles = {
   nav: {
     display: 'flex',
@@ -60,6 +86,7 @@ const styles = {
     fontSize: '22px',
     color: '#0a0a0a',
     letterSpacing: '-0.5px',
+    cursor: 'pointer',
   },
   accent: { color: '#2563eb' },
   links: {
@@ -72,7 +99,6 @@ const styles = {
     color: '#6b7280',
     cursor: 'pointer',
     fontWeight: '500',
-    transition: 'color 0.2s',
   },
   authRow: { display: 'flex', gap: '10px', alignItems: 'center' },
   ghostBtn: {

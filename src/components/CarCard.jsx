@@ -5,7 +5,19 @@ function CarCard({ id, name, type, seats, price, rating, trips, emoji, badge, im
   console.log('Car:', name, 'image_url:', image_url)
 
   return (
-    <div style={styles.card}>
+    <div 
+    style={styles.card}
+    onMouseEnter={e => {
+      e.currentTarget.style.transform = 'translateY(-4px)'
+      e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.12)'
+      e.currentTarget.style.borderColor = '#dbeafe'
+    }}
+    onMouseLeave={e => {
+      e.currentTarget.style.transform = 'translateY(0)'
+      e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.04)'
+      e.currentTarget.style.borderColor = '#f0f0f0'
+    }}
+  >
       <div style={styles.imgBox}>
         {image_url ? (
           <img src={image_url} alt={name} style={styles.img} />
@@ -130,6 +142,15 @@ const styles = {
     fontSize: '13px',
     fontWeight: '600',
     cursor: 'pointer',
+  },
+  card: {
+    background: '#ffffff',
+    border: '1.5px solid #f0f0f0',
+    borderRadius: '16px',
+    overflow: 'hidden',
+    cursor: 'pointer',
+    transition: 'all 0.25s ease',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
   },
 }
 

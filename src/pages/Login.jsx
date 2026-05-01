@@ -76,9 +76,30 @@ function Login({ onLogin }) {
             />
           </div>
 
-          <button style={styles.btn} onClick={handleLogin} disabled={loading}>
-            {loading ? 'Signing in...' : 'Sign in →'}
-          </button>
+          <button 
+  style={{
+    ...styles.btn,
+    opacity: loading ? 0.7 : 1,
+    cursor: loading ? 'not-allowed' : 'pointer',
+  }} 
+  onClick={handleLogin} 
+  disabled={loading}
+>
+  {loading ? (
+    <span style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'}}>
+      <span style={{
+        width: '16px', height: '16px',
+        border: '2px solid rgba(0,0,0,0.2)',
+        borderTop: '2px solid #0a0a0a',
+        borderRadius: '50%',
+        animation: 'spin 0.8s linear infinite',
+        display: 'inline-block',
+      }}></span>
+      Signing in...
+    </span>
+  ) : 'Sign in →'}
+  <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+</button>
 
           <p style={styles.switch}>
             Don't have an account?{' '}
