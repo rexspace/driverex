@@ -11,6 +11,7 @@ import Admin from './pages/Admin'
 import About from './pages/About'
 import Locations from './pages/Locations'
 import Pricing from './pages/Pricing'
+import VerifyEmail from './pages/VerifyEmail'
 
 function PageLoader() {
   return (
@@ -107,6 +108,7 @@ function App() {
             <Pricing />
           </PageWrapper>
         } />
+        <Route path="/verify-email" element={<VerifyEmail />} />
       </Routes>
     </BrowserRouter>
   )

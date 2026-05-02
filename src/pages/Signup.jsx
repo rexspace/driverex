@@ -7,6 +7,7 @@ function Signup({ onLogin }) {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
   const navigate = useNavigate()
 
   const handleSignup = async () => {
@@ -24,21 +25,41 @@ function Signup({ onLogin }) {
         setLoading(false)
         return
       }
-      const loginRes = await fetch('https://driverex-backend.onrender.com/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      })
-      const loginData = await loginRes.json()
-      localStorage.setItem('token', loginData.token)
-      localStorage.setItem('name', loginData.name)
-      localStorage.setItem('email', email)
-      onLogin(loginData.name)
+      setSuccess(true)
+      setLoading(false)
     } catch (err) {
       setError('Something went wrong')
       setLoading(false)
     }
   }
+
+  if (success) return (
+    <div style={styles.page}>
+      <div style={styles.left}>
+        <div style={styles.logo} onClick={() => navigate('/')}>
+          Drive<span style={styles.accent}>Rex</span>
+        </div>
+        <h1 style={styles.heading}>Almost there!</h1>
+        <p style={styles.sub}>Just one more step to start renting</p>
+      </div>
+      <div style={styles.right}>
+        <div style={styles.card}>
+          <div style={styles.successIcon}>📧</div>
+          <h2 style={styles.title}>Check your email!</h2>
+          <p style={styles.cardSub}>
+            We sent a verification link to <strong>{email}</strong>.
+            Click it to activate your account.
+          </p>
+          <div style={styles.infoBox}>
+            <p style={styles.infoText}>💡 Check your spam folder if you don't see it within a minute.</p>
+          </div>
+          <button style={styles.btn} onClick={() => navigate('/login')}>
+            Go to login →
+          </button>
+        </div>
+      </div>
+    </div>
+  )
 
   return (
     <div style={styles.page}>
@@ -93,30 +114,30 @@ function Signup({ onLogin }) {
             />
           </div>
 
-          <button 
-  style={{
-    ...styles.btn,
-    opacity: loading ? 0.7 : 1,
-    cursor: loading ? 'not-allowed' : 'pointer',
-  }} 
-  onClick={handleSignup} 
-  disabled={loading}
->
-  {loading ? (
-    <span style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'}}>
-      <span style={{
-        width: '16px', height: '16px',
-        border: '2px solid rgba(0,0,0,0.2)',
-        borderTop: '2px solid #0a0a0a',
-        borderRadius: '50%',
-        animation: 'spin 0.8s linear infinite',
-        display: 'inline-block',
-      }}></span>
-      Creating account...
-    </span>
-  ) : 'Create account →'}
-  <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-</button>
+          <button
+            style={{
+              ...styles.btn,
+              opacity: loading ? 0.7 : 1,
+              cursor: loading ? 'not-allowed' : 'pointer',
+            }}
+            onClick={handleSignup}
+            disabled={loading}
+          >
+            {loading ? (
+              <span style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'}}>
+                <span style={{
+                  width: '16px', height: '16px',
+                  border: '2px solid rgba(0,0,0,0.2)',
+                  borderTop: '2px solid #0a0a0a',
+                  borderRadius: '50%',
+                  animation: 'spin 0.8s linear infinite',
+                  display: 'inline-block',
+                }}></span>
+                Creating account...
+              </span>
+            ) : 'Create account →'}
+            <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+          </button>
 
           <p style={styles.switch}>
             Already have an account?{' '}
@@ -183,16 +204,36 @@ const styles = {
     width: '100%',
     boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
   },
+  successIcon: {
+    fontSize: '48px',
+    textAlign: 'center',
+    marginBottom: '16px',
+  },
   title: {
     fontSize: '24px',
     fontWeight: '800',
     color: '#0a0a0a',
     marginBottom: '8px',
+    textAlign: 'center',
   },
   cardSub: {
     fontSize: '14px',
     color: '#6b7280',
     marginBottom: '28px',
+    textAlign: 'center',
+    lineHeight: '1.6',
+  },
+  infoBox: {
+    background: '#eff6ff',
+    border: '1px solid #dbeafe',
+    borderRadius: '10px',
+    padding: '14px',
+    marginBottom: '24px',
+  },
+  infoText: {
+    fontSize: '13px',
+    color: '#2563eb',
+    lineHeight: '1.5',
   },
   error: {
     background: '#fef2f2',
