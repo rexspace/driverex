@@ -25,14 +25,23 @@ function Signup({ onLogin }) {
         setLoading(false)
         return
       }
-      setSuccess(true)
-      setLoading(false)
+      // Auto login after signup
+      const loginRes = await fetch('https://driverex-backend.onrender.com/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      })
+      const loginData = await loginRes.json()
+      localStorage.setItem('token', loginData.token)
+      localStorage.setItem('name', loginData.name)
+      localStorage.setItem('email', email)
+      onLogin(loginData.name)
     } catch (err) {
       setError('Something went wrong')
       setLoading(false)
     }
   }
-
+  
   if (success) return (
     <div style={styles.page}>
       <div style={styles.left}>
