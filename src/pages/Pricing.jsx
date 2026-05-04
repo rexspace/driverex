@@ -2,7 +2,7 @@ function Pricing() {
     const plans = [
       {
         name: 'Economy',
-        price: '18,000',
+        price: '18,000/hr',
         desc: 'Perfect for daily commutes and short trips',
         color: '#f9fafb',
         features: ['Toyota Corolla or similar', 'Up to 5 passengers', 'Free cancellation 24hrs', 'Basic insurance included', 'Free pickup in Abuja'],
@@ -10,7 +10,7 @@ function Pricing() {
       },
       {
         name: 'Standard',
-        price: '35,000',
+        price: '35,000/hr',
         desc: 'Our most popular choice for business trips',
         color: '#2563eb',
         features: ['Toyota Camry or similar', 'Up to 5 passengers', 'Free cancellation 48hrs', 'Comprehensive insurance', 'Free pickup anywhere', 'Priority support'],
@@ -18,7 +18,7 @@ function Pricing() {
       },
       {
         name: 'Premium',
-        price: '85,000',
+        price: '85,000/hr',
         desc: 'Luxury vehicles for special occasions',
         color: '#0a0a0a',
         features: ['Mercedes, BMW or similar', 'Up to 7 passengers', 'Free cancellation anytime', 'Full insurance coverage', 'Free pickup & dropoff', '24/7 VIP support', 'Complimentary driver'],
