@@ -11,7 +11,31 @@ function BookCar() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(false)
+  const [step, setStep] = useState(1)
 
+  const [formData, setFormData] = useState({
+    phone_number: '',
+    home_address: '',
+    city: '',
+    state: '',
+
+    has_license: false,
+    license_number: '',
+    license_expiry: '',
+
+    needs_driver: false,
+
+    nin: '',
+
+    emergency_contact_name: '',
+    emergency_contact_phone: '',
+  })
+  const updateFormData = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }))
+  }
   const user = localStorage.getItem('name')
   const token = localStorage.getItem('token')
 
@@ -167,37 +191,43 @@ Please confirm my booking. Thank you!`
           )}
 
           {error && <div style={styles.error}>{error}</div>}
+          <div style={styles.stepIndicator}>
+  Step {step} of 5
+</div>
+          {step === 1 && (
+  <>
+    <div style={styles.fieldGroup}>
+      <div style={styles.field}>
+        <label style={styles.label}>Pickup Date</label>
+        <input
+          style={styles.input}
+          type="date"
+          value={pickupDate}
+          onChange={e => setPickupDate(e.target.value)}
+          min={new Date().toISOString().split('T')[0]}
+        />
+      </div>
 
-          <div style={styles.fieldGroup}>
-            <div style={styles.field}>
-              <label style={styles.label}>Pickup Date</label>
-              <input
-                style={styles.input}
-                type="date"
-                value={pickupDate}
-                onChange={e => setPickupDate(e.target.value)}
-                min={new Date().toISOString().split('T')[0]}
-              />
-            </div>
-            <div style={styles.field}>
-              <label style={styles.label}>Return Date</label>
-              <input
-                style={styles.input}
-                type="date"
-                value={returnDate}
-                onChange={e => setReturnDate(e.target.value)}
-                min={pickupDate}
-              />
-            </div>
-          </div>
+      <div style={styles.field}>
+        <label style={styles.label}>Return Date</label>
+        <input
+          style={styles.input}
+          type="date"
+          value={returnDate}
+          onChange={e => setReturnDate(e.target.value)}
+          min={pickupDate}
+        />
+      </div>
+    </div>
 
-          <button
-            style={{...styles.btn, opacity: loading ? 0.7 : 1}}
-            onClick={handleBooking}
-            disabled={loading}
-          >
-            {loading ? 'Confirming...' : 'Confirm Booking'}
-          </button>
+    <button
+      style={styles.btn}
+      onClick={() => setStep(2)}
+    >
+      Continue
+    </button>
+  </>
+)}
         </div>
 
         <div style={styles.right}>
@@ -531,6 +561,16 @@ const styles = {
     fontWeight: '600',
     cursor: 'pointer',
     marginBottom: '16px',
+  },
+  stepIndicator: {
+    background: '#eff6ff',
+    color: '#2563eb',
+    padding: '8px 14px',
+    borderRadius: '999px',
+    fontSize: '13px',
+    fontWeight: '600',
+    display: 'inline-block',
+    marginBottom: '24px',
   },
 }
 
