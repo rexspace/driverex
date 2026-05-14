@@ -18,7 +18,7 @@ function Pricing() {
       },
       {
         name: 'Premium',
-        price: '850,000',
+        price: '850,000/hr',
         desc: 'Luxury vehicles for special occasions',
         color: '#0a0a0a',
         features: ['Mercedes, BMW or similar', 'Up to 7 passengers', 'Free cancellation anytime', 'Full insurance coverage', 'Free pickup & dropoff', '24/7 VIP support', 'Complimentary driver'],

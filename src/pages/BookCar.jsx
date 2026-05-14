@@ -88,30 +88,49 @@ function BookCar() {
             <span style={styles.totalLabel}>Total amount</span>
             <span style={styles.totalPrice}>₦{totalPrice.toLocaleString()}</span>
           </div>
+
+          <p style={styles.paymentTitle}>Complete your payment</p>
+          <p style={styles.paymentSub}>Choose how you want to pay</p>
+
           <button
-  style={{
-    ...styles.btn,
-    opacity: loading ? 0.7 : 1,
-    cursor: loading ? 'not-allowed' : 'pointer',
-  }}
-  onClick={handleBooking}
-  disabled={loading}
->
-  {loading ? (
-    <span style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'}}>
-      <span style={{
-        width: '16px', height: '16px',
-        border: '2px solid rgba(255,255,255,0.3)',
-        borderTop: '2px solid white',
-        borderRadius: '50%',
-        animation: 'spin 0.8s linear infinite',
-        display: 'inline-block',
-      }}></span>
-      Confirming...
-    </span>
-  ) : 'Confirm Booking'}
-  <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-</button>
+            style={styles.whatsappBtn}
+            onClick={() => {
+              const message = `Hello DriveRex! 👋
+
+I just made a booking and want to complete payment.
+
+*Booking Details:*
+🚗 Car: ${car?.name}
+📅 Pickup: ${pickupDate}
+📅 Return: ${returnDate}
+💰 Total: ₦${totalPrice.toLocaleString()}
+👤 Name: ${user}
+
+Please confirm my booking. Thank you!`
+              const encodedMessage = encodeURIComponent(message)
+              window.open(`https://wa.me/2348163458818?text=${encodedMessage}`, '_blank')
+            }}
+          >
+            <span style={styles.whatsappIcon}>💬</span>
+            Pay via WhatsApp
+          </button>
+
+          <div style={styles.orDivider}>
+            <div style={styles.orLine}></div>
+            <span style={styles.orText}>or</span>
+            <div style={styles.orLine}></div>
+          </div>
+
+          <button
+            style={styles.paystackBtn}
+            onClick={() => alert('Paystack coming soon!')}
+          >
+            💳 Pay Online with Paystack
+          </button>
+
+          <button style={styles.backBtn} onClick={() => navigate('/')}>
+            Back to Home
+          </button>
         </div>
       </div>
     </div>
@@ -454,6 +473,64 @@ const styles = {
     fontSize: '20px',
     fontWeight: '800',
     color: '#2563eb',
+  },
+  paymentTitle: {
+    fontSize: '16px',
+    fontWeight: '700',
+    color: '#0a0a0a',
+    marginBottom: '4px',
+    textAlign: 'center',
+  },
+  paymentSub: {
+    fontSize: '13px',
+    color: '#6b7280',
+    marginBottom: '20px',
+    textAlign: 'center',
+  },
+  whatsappBtn: {
+    width: '100%',
+    background: '#25D366',
+    color: 'white',
+    border: 'none',
+    padding: '14px',
+    borderRadius: '10px',
+    fontSize: '15px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    marginBottom: '12px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '8px',
+  },
+  whatsappIcon: { fontSize: '18px' },
+  orDivider: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    marginBottom: '12px',
+  },
+  orLine: {
+    flex: 1,
+    height: '1px',
+    background: '#f0f0f0',
+  },
+  orText: {
+    fontSize: '12px',
+    color: '#9ca3af',
+    fontWeight: '500',
+  },
+  paystackBtn: {
+    width: '100%',
+    background: '#f9fafb',
+    color: '#374151',
+    border: '1.5px solid #e5e7eb',
+    padding: '14px',
+    borderRadius: '10px',
+    fontSize: '15px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    marginBottom: '16px',
   },
 }
 
