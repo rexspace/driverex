@@ -43,6 +43,7 @@ class Booking(Base):
     emergency_contact_phone = Column(String)
 
     booking_status = Column(String, default="pending")
+
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)

@@ -76,11 +76,30 @@ function BookCar() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           car_id: parseInt(carId),
+        
           customer_name: user,
           customer_email: 'user@driverex.com',
+        
           pickup_date: pickupDate,
           return_date: returnDate,
+        
           total_price: totalPrice,
+        
+          phone_number: formData.phone_number,
+          home_address: formData.home_address,
+          state: formData.state,
+        
+          has_license: formData.has_license,
+          license_number: formData.license_number,
+          license_expiry: formData.license_expiry,
+        
+          needs_driver: formData.needs_driver,
+        
+          emergency_contact_name:
+            formData.emergency_contact_name,
+        
+          emergency_contact_phone:
+            formData.emergency_contact_phone,
         })
       })
       if (response.ok) {
@@ -104,33 +123,59 @@ function BookCar() {
       <div style={styles.successPage}>
         <div style={styles.successCard}>
           <div style={styles.successIcon}>🎉</div>
-          <h2 style={styles.successTitle}>Booking Confirmed!</h2>
-          <p style={styles.successSub}>
-            Your {car?.name} is booked from {pickupDate} to {returnDate}.
-          </p>
+          <h2 style={styles.successTitle}>
+  Booking Request Submitted
+</h2>
+<p style={styles.successSub}>
+  Your booking request for the {car?.name}
+  has been submitted successfully.
+
+  Our team will review your information
+  and contact you shortly to confirm
+  availability and payment.
+</p>
           <div style={styles.totalBox}>
             <span style={styles.totalLabel}>Total amount</span>
             <span style={styles.totalPrice}>₦{totalPrice.toLocaleString()}</span>
           </div>
+          <div style={styles.statusBox}>
+  <span style={styles.statusBadge}>
+    Pending Review
+  </span>
 
+  <p style={styles.statusText}>
+    Your booking is currently under review.
+    Please complete payment via WhatsApp
+    to secure your reservation.
+  </p>
+</div>
           <p style={styles.paymentTitle}>Complete your payment</p>
           <p style={styles.paymentSub}>Choose how you want to pay</p>
 
           <button
             style={styles.whatsappBtn}
             onClick={() => {
-              const message = `Hello DriveRex! 👋
+              const message = `Hello Driverex! 👋
 
-I just made a booking and want to complete payment.
-
-*Booking Details:*
-🚗 Car: ${car?.name}
-📅 Pickup: ${pickupDate}
-📅 Return: ${returnDate}
-💰 Total: ₦${totalPrice.toLocaleString()}
-👤 Name: ${user}
-
-Please confirm my booking. Thank you!`
+              I just submitted a booking request.
+              
+              *Customer Information*
+              👤 Name: ${user}
+              📞 Phone: ${formData.phone_number}
+              📍 State: ${formData.state}
+              
+              *Rental Details*
+              🚗 Car: ${car?.name}
+              📅 Pickup: ${pickupDate}
+              📅 Return: ${returnDate}
+              💰 Total: ₦${totalPrice.toLocaleString()}
+              
+              *Driver Information*
+              🪪 Has License: ${formData.has_license ? 'Yes' : 'No'}
+              🚘 Needs Driver: ${formData.needs_driver ? 'Yes' : 'No'}
+              
+              Please confirm availability and payment details.
+              Thank you!`
               const encodedMessage = encodeURIComponent(message)
               window.open(`https://wa.me/2348163458818?text=${encodedMessage}`, '_blank')
             }}
@@ -226,6 +271,373 @@ Please confirm my booking. Thank you!`
     >
       Continue
     </button>
+  </>
+)}
+    {step === 2 && (
+  <>
+    <div style={styles.fieldGroup}>
+      <div style={styles.field}>
+        <label style={styles.label}>Phone Number</label>
+        <input
+          style={styles.input}
+          type="text"
+          placeholder="08012345678"
+          value={formData.phone_number}
+          onChange={(e) =>
+            updateFormData('phone_number', e.target.value)
+          }
+        />
+      </div>
+
+      <div style={styles.field}>
+        <label style={styles.label}>State</label>
+        <select
+  style={styles.input}
+  value={formData.state}
+  onChange={(e) =>
+    updateFormData('state', e.target.value)
+  }
+>
+  <option value="">Select State</option>
+
+  <option value="Lagos">Lagos</option>
+  <option value="Abuja">Abuja (FCT)</option>
+  <option value="Rivers">Rivers</option>
+  <option value="Ogun">Ogun</option>
+  <option value="Oyo">Oyo</option>
+  <option value="Kano">Kano</option>
+  <option value="Kaduna">Kaduna</option>
+  <option value="Enugu">Enugu</option>
+  <option value="Delta">Delta</option>
+  <option value="Anambra">Anambra</option>
+  <option value="Edo">Edo</option>
+  <option value="Akwa Ibom">Akwa Ibom</option>
+  <option value="Borno">Borno</option>
+  <option value="Osun">Osun</option>
+  <option value="Ondo">Ondo</option>
+  <option value="Cross River">Cross River</option>
+  <option value="Abia">Abia</option>
+</select>
+      </div>
+    </div>
+
+    <div style={styles.field}>
+      <label style={styles.label}>Home Address</label>
+      <input
+        style={styles.input}
+        type="text"
+        placeholder="Enter your address"
+        value={formData.home_address}
+        onChange={(e) =>
+          updateFormData('home_address', e.target.value)
+        }
+      />
+    </div>
+
+    <div style={styles.buttonRow}>
+      <button
+        style={styles.secondaryBtn}
+        onClick={() => setStep(1)}
+      >
+        Back
+      </button>
+
+      <button
+        style={styles.btn}
+        onClick={() => setStep(3)}
+      >
+        Continue
+      </button>
+    </div>
+  </>
+)}
+{step === 3 && (
+  <>
+    <div style={{ marginBottom: '24px' }}>
+      <label style={styles.label}>
+        Do you have a valid driver's license?
+      </label>
+
+      <div style={styles.radioGroup}>
+        <button
+          type="button"
+          style={{
+            ...styles.optionBtn,
+            background: formData.has_license ? '#2563eb' : '#f9fafb',
+            color: formData.has_license ? '#fff' : '#374151',
+          }}
+          onClick={() => {
+            updateFormData('has_license', true)
+            updateFormData('needs_driver', false)
+          }}
+        >
+          Yes, I have a license
+        </button>
+
+        <button
+          type="button"
+          style={{
+            ...styles.optionBtn,
+            background: !formData.has_license ? '#2563eb' : '#f9fafb',
+            color: !formData.has_license ? '#fff' : '#374151',
+          }}
+          onClick={() => {
+            updateFormData('has_license', false)
+          }}
+        >
+          No License
+        </button>
+      </div>
+    </div>
+
+    {formData.has_license && (
+      <>
+        <div style={styles.fieldGroup}>
+          <div style={styles.field}>
+            <label style={styles.label}>License Number</label>
+            <input
+              style={styles.input}
+              type="text"
+              placeholder="Enter license number"
+              value={formData.license_number}
+              onChange={(e) =>
+                updateFormData('license_number', e.target.value)
+              }
+            />
+          </div>
+
+          <div style={styles.field}>
+            <label style={styles.label}>Expiry Date</label>
+            <input
+              style={styles.input}
+              type="date"
+              value={formData.license_expiry}
+              onChange={(e) =>
+                updateFormData('license_expiry', e.target.value)
+              }
+            />
+          </div>
+        </div>
+      </>
+    )}
+
+    {!formData.has_license && (
+      <div style={{ marginBottom: '24px' }}>
+        <label style={styles.label}>
+          Would you like a chauffeur?
+        </label>
+
+        <div style={styles.radioGroup}>
+          <button
+            type="button"
+            style={{
+              ...styles.optionBtn,
+              background: formData.needs_driver ? '#2563eb' : '#f9fafb',
+              color: formData.needs_driver ? '#fff' : '#374151',
+            }}
+            onClick={() =>
+              updateFormData('needs_driver', true)
+            }
+          >
+            Yes, I need a driver
+          </button>
+
+          <button
+            type="button"
+            style={{
+              ...styles.optionBtn,
+              background: !formData.needs_driver ? '#2563eb' : '#f9fafb',
+              color: !formData.needs_driver ? '#fff' : '#374151',
+            }}
+            onClick={() =>
+              updateFormData('needs_driver', false)
+            }
+          >
+            No, someone else will drive
+          </button>
+        </div>
+      </div>
+    )}
+
+    <div style={styles.buttonRow}>
+      <button
+        style={styles.secondaryBtn}
+        onClick={() => setStep(2)}
+      >
+        Back
+      </button>
+
+      <button
+        style={styles.btn}
+        onClick={() => setStep(4)}
+      >
+        Continue
+      </button>
+    </div>
+  </>
+)}
+{step === 4 && (
+  <>
+    <div style={styles.fieldGroup}>
+      <div style={styles.field}>
+        <label style={styles.label}>
+          Emergency Contact Name
+        </label>
+
+        <input
+          style={styles.input}
+          type="text"
+          placeholder="Full name"
+          value={formData.emergency_contact_name}
+          onChange={(e) =>
+            updateFormData(
+              'emergency_contact_name',
+              e.target.value
+            )
+          }
+        />
+      </div>
+
+      <div style={styles.field}>
+        <label style={styles.label}>
+          Emergency Contact Phone
+        </label>
+
+        <input
+          style={styles.input}
+          type="text"
+          placeholder="08012345678"
+          value={formData.emergency_contact_phone}
+          onChange={(e) =>
+            updateFormData(
+              'emergency_contact_phone',
+              e.target.value
+            )
+          }
+        />
+      </div>
+    </div>
+
+    <div style={styles.field}>
+      <label style={styles.label}>
+        Relationship
+      </label>
+
+      <select style={styles.input}>
+        <option>Parent</option>
+        <option>Sibling</option>
+        <option>Friend</option>
+        <option>Spouse</option>
+        <option>Colleague</option>
+      </select>
+    </div>
+
+    <div style={styles.buttonRow}>
+      <button
+        style={styles.secondaryBtn}
+        onClick={() => setStep(3)}
+      >
+        Back
+      </button>
+
+      <button
+        style={styles.btn}
+        onClick={() => setStep(5)}
+      >
+        Continue
+      </button>
+    </div>
+  </>
+)}
+{step === 5 && (
+  <>
+    <div style={styles.reviewCard}>
+      <h3 style={styles.reviewTitle}>
+        Review Your Booking
+      </h3>
+
+      <div style={styles.reviewRow}>
+        <span>Car</span>
+        <strong>{car?.name}</strong>
+      </div>
+
+      <div style={styles.reviewRow}>
+        <span>Pickup Date</span>
+        <strong>{pickupDate}</strong>
+      </div>
+
+      <div style={styles.reviewRow}>
+        <span>Return Date</span>
+        <strong>{returnDate}</strong>
+      </div>
+
+      <div style={styles.reviewRow}>
+        <span>Phone Number</span>
+        <strong>{formData.phone_number}</strong>
+      </div>
+
+      <div style={styles.reviewRow}>
+        <span>State</span>
+        <strong>{formData.state}</strong>
+      </div>
+
+      <div style={styles.reviewRow}>
+        <span>Has License</span>
+        <strong>
+          {formData.has_license ? 'Yes' : 'No'}
+        </strong>
+      </div>
+
+      {!formData.has_license && (
+        <div style={styles.reviewRow}>
+          <span>Needs Driver</span>
+          <strong>
+            {formData.needs_driver ? 'Yes' : 'No'}
+          </strong>
+        </div>
+      )}
+
+      {formData.has_license && (
+        <div style={styles.reviewRow}>
+          <span>License Number</span>
+          <strong>{formData.license_number}</strong>
+        </div>
+      )}
+
+      <div style={styles.reviewRow}>
+        <span>Emergency Contact</span>
+        <strong>
+          {formData.emergency_contact_name}
+        </strong>
+      </div>
+
+      <div style={styles.reviewRow}>
+        <span>Total</span>
+        <strong>
+          ₦{totalPrice.toLocaleString()}
+        </strong>
+      </div>
+    </div>
+
+    <div style={styles.buttonRow}>
+      <button
+        style={styles.secondaryBtn}
+        onClick={() => setStep(4)}
+      >
+        Back
+      </button>
+
+      <button
+        style={{
+          ...styles.btn,
+          opacity: loading ? 0.7 : 1
+        }}
+        onClick={handleBooking}
+        disabled={loading}
+      >
+        {loading ? 'Submitting...' : 'Submit Booking'}
+      </button>
+    </div>
   </>
 )}
         </div>
@@ -571,6 +983,84 @@ const styles = {
     fontWeight: '600',
     display: 'inline-block',
     marginBottom: '24px',
+  },
+  buttonRow: {
+    display: 'flex',
+    gap: '12px',
+    marginTop: '24px',
+  },
+  
+  secondaryBtn: {
+    flex: 1,
+    background: '#f3f4f6',
+    color: '#374151',
+    border: 'none',
+    padding: '14px',
+    borderRadius: '10px',
+    fontSize: '15px',
+    fontWeight: '600',
+    cursor: 'pointer',
+  },
+  radioGroup: {
+    display: 'flex',
+    gap: '12px',
+    flexWrap: 'wrap',
+  },
+  
+  optionBtn: {
+    flex: 1,
+    border: '1.5px solid #e5e7eb',
+    borderRadius: '10px',
+    padding: '14px',
+    cursor: 'pointer',
+    fontSize: '14px',
+    fontWeight: '600',
+  },
+  reviewCard: {
+    background: '#f9fafb',
+    border: '1.5px solid #f0f0f0',
+    borderRadius: '16px',
+    padding: '24px',
+    marginBottom: '24px',
+  },
+  
+  reviewTitle: {
+    fontSize: '18px',
+    fontWeight: '700',
+    marginBottom: '20px',
+    color: '#0a0a0a',
+  },
+  
+  reviewRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: '14px',
+    fontSize: '14px',
+    color: '#374151',
+  },
+  statusBox: {
+    background: '#fffbeb',
+    border: '1px solid #fde68a',
+    borderRadius: '12px',
+    padding: '16px',
+    marginBottom: '24px',
+  },
+  
+  statusBadge: {
+    display: 'inline-block',
+    background: '#f59e0b',
+    color: '#ffffff',
+    padding: '6px 12px',
+    borderRadius: '999px',
+    fontSize: '12px',
+    fontWeight: '700',
+    marginBottom: '10px',
+  },
+  
+  statusText: {
+    fontSize: '13px',
+    color: '#92400e',
+    lineHeight: '1.6',
   },
 }
 
