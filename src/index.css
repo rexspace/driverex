@@ -13,13 +13,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-a {
-  text-decoration: none;
-}
+a { text-decoration: none; }
 
 input, button, select {
   font-family: inherit;
 }
+
 button {
   transition: all 0.2s ease;
 }
@@ -31,4 +30,45 @@ button:hover:not(:disabled) {
 
 button:active:not(:disabled) {
   transform: translateY(0px);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  /* Navbar */
+  nav {
+    padding: 16px 20px !important;
+  }
+
+  /* Hide desktop nav links and auth on mobile */
+  nav ul,
+  nav > div:last-child {
+    display: none !important;
+  }
+
+  /* Show hamburger on mobile */
+  nav button.hamburger-btn {
+    display: block !important;
+  }
+
+  /* Hero section */
+  .hero-section {
+    flex-direction: column !important;
+    padding: 40px 20px !important;
+  }
+
+  /* Car grid */
+  .cars-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Content padding */
+  .section-padding {
+    padding: 40px 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .cars-grid {
+    grid-template-columns: 1fr !important;
+  }
 }

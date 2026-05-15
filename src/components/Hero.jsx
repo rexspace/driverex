@@ -70,9 +70,10 @@ function Hero() {
 const styles = {
   hero: {
     display: 'flex',
+    flexDirection: window.innerWidth < 768 ? 'column' : 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '80px 48px',
+    padding: window.innerWidth < 768 ? '40px 20px' : '80px 48px',
     gap: '60px',
     backgroundColor: '#ffffff',
   },
