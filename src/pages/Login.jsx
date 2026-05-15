@@ -116,13 +116,14 @@ function Login({ onLogin }) {
 const styles = {
   page: {
     display: 'flex',
+    flexDirection: window.innerWidth < 768 ? 'column' : 'row',
     minHeight: '100vh',
     backgroundColor: '#ffffff',
   },
   left: {
-    flex: 1,
+    flex: window.innerWidth < 768 ? 'none' : 1,
     background: '#0a0a0a',
-    padding: '64px',
+    padding: window.innerWidth < 768 ? '32px 24px' : '64px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -136,7 +137,7 @@ const styles = {
   },
   accent: { color: '#2563eb' },
   heading: {
-    fontSize: '36px',
+    fontSize: window.innerWidth < 768 ? '24px' : '36px',
     fontWeight: '800',
     color: 'white',
     lineHeight: '1.1',
@@ -151,11 +152,11 @@ const styles = {
   features: { display: 'flex', flexDirection: 'column', gap: '12px' },
   feature: { fontSize: '15px', color: 'rgba(255,255,255,0.7)' },
   right: {
-    width: '480px',
+    width: window.innerWidth < 768 ? '100%' : '480px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '48px',
+    padding: window.innerWidth < 768 ? '24px' : '48px',
     background: '#f9fafb',
   },
   card: {
