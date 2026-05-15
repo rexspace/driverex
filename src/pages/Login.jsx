@@ -34,21 +34,21 @@ function Login({ onLogin }) {
   }
 
   return (
-    <div style={styles.page}>
-      <div style={styles.left}>
+    <div  className="auth-page" style={styles.page}>
+      <div  className="auth-left"style={styles.left}>
         <div style={styles.logo} onClick={() => navigate('/')}>
           Drive<span style={styles.accent}>Rex</span>
         </div>
         <h1 style={styles.heading}>Welcome back to DriveRex</h1>
         <p style={styles.sub}>Nigeria's smartest car rental platform</p>
-        <div style={styles.features}>
-          <div style={styles.feature}>✅ 48+ premium cars</div>
-          <div style={styles.feature}>✅ Instant booking</div>
-          <div style={styles.feature}>✅ No hidden fees</div>
-          <div style={styles.feature}>✅ 24/7 support</div>
+        <div  className="auth-features" style={styles.features}>
+          <div className="auth-features"style={styles.feature}>✅ 48+ premium cars</div>
+          <div className="auth-features"style={styles.feature}>✅ Instant booking</div>
+          <div className="auth-features"style={styles.feature}>✅ No hidden fees</div>
+          <div className="auth-features"style={styles.feature}>✅ 24/7 support</div>
         </div>
       </div>
-      <div style={styles.right}>
+      <div className="auth-right" style={styles.right}>
         <div style={styles.card}>
           <h2 style={styles.title}>Sign in</h2>
           <p style={styles.cardSub}>Enter your details to continue</p>

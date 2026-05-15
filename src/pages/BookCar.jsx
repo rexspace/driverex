@@ -120,8 +120,8 @@ function BookCar() {
         localStorage.removeItem('name')
         navigate('/')
       }} />
-      <div style={styles.successPage}>
-        <div style={styles.successCard}>
+      <div className="success-page" style={styles.successPage}>
+        <div className="success-card" style={styles.successCard}>
           <div style={styles.successIcon}>🎉</div>
           <h2 style={styles.successTitle}>
   Booking Request Submitted
@@ -134,7 +134,7 @@ function BookCar() {
   and contact you shortly to confirm
   availability and payment.
 </p>
-          <div style={styles.totalBox}>
+          <div className="total-box" style={styles.totalBox}>
             <span style={styles.totalLabel}>Total amount</span>
             <span style={styles.totalPrice}>₦{totalPrice.toLocaleString()}</span>
           </div>
@@ -221,8 +221,8 @@ function BookCar() {
         localStorage.removeItem('name')
         navigate('/')
       }} />
-      <div style={styles.content}>
-        <div style={styles.left}>
+      <div className="booking-content" style={styles.content}>
+        <div className="booking-left"style={styles.left}>
           <button style={styles.backBtn} onClick={() => navigate('/')}>
             ← Back to fleet
           </button>
@@ -241,7 +241,7 @@ function BookCar() {
 </div>
           {step === 1 && (
   <>
-    <div style={styles.fieldGroup}>
+    <div className="field-group" style={styles.fieldGroup}>
       <div style={styles.field}>
         <label style={styles.label}>Pickup Date</label>
         <input
@@ -642,7 +642,7 @@ function BookCar() {
 )}
         </div>
 
-        <div style={styles.right}>
+        <div className="booking-right"style={styles.right}>
           <div style={styles.carCard}>
             <div style={styles.carImgBox}>
               {car.image_url ? (

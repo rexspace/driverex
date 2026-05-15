@@ -32,43 +32,139 @@ button:active:not(:disabled) {
   transform: translateY(0px);
 }
 
-/* Mobile responsive */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── NAVBAR ── */
+.nav-links { display: flex !important; }
+.nav-auth { display: flex !important; }
+.hamburger-btn { display: none !important; }
+
 @media (max-width: 768px) {
-  /* Navbar */
-  nav {
-    padding: 16px 20px !important;
-  }
+  .nav-links { display: none !important; }
+  .nav-auth { display: none !important; }
+  .hamburger-btn { display: block !important; }
+}
 
-  /* Hide desktop nav links and auth on mobile */
-  nav ul,
-  nav > div:last-child {
-    display: none !important;
-  }
-
-  /* Show hamburger on mobile */
-  nav button.hamburger-btn {
-    display: block !important;
-  }
-
-  /* Hero section */
+/* ── HERO ── */
+@media (max-width: 768px) {
   .hero-section {
     flex-direction: column !important;
-    padding: 40px 20px !important;
+    padding: 32px 20px !important;
+    gap: 32px !important;
   }
+  .hero-left { width: 100% !important; }
+  .hero-right { width: 100% !important; }
+  .hero-heading { font-size: 36px !important; }
+  .hero-stats { gap: 16px !important; }
+}
 
-  /* Car grid */
+/* ── CAR GRID ── */
+@media (max-width: 768px) {
   .cars-grid {
     grid-template-columns: 1fr !important;
   }
-
-  /* Content padding */
-  .section-padding {
-    padding: 40px 20px !important;
+  .cars-section {
+    padding: 32px 20px !important;
   }
 }
 
-@media (max-width: 480px) {
-  .cars-grid {
+/* ── BOOKING PAGE ── */
+@media (max-width: 768px) {
+  .booking-content {
+    flex-direction: column !important;
+    padding: 24px 20px !important;
+  }
+  .booking-right {
+    width: 100% !important;
+    order: -1 !important;
+  }
+  .booking-left {
+    width: 100% !important;
+  }
+  .field-group {
     grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── SUCCESS PAGE ── */
+@media (max-width: 768px) {
+  .success-page {
+    padding: 24px 20px !important;
+    min-height: auto !important;
+  }
+  .success-card {
+    padding: 28px 20px !important;
+  }
+  .total-box {
+    flex-direction: column !important;
+    gap: 8px !important;
+    text-align: center !important;
+  }
+}
+
+/* ── FOOTER ── */
+@media (max-width: 768px) {
+  .footer-top {
+    flex-direction: column !important;
+    gap: 32px !important;
+  }
+  .footer-links-group {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px !important;
+  }
+  .footer-wrap {
+    padding: 40px 20px 24px !important;
+  }
+  .footer-bottom {
+    flex-direction: column !important;
+    gap: 8px !important;
+    text-align: center !important;
+  }
+}
+
+/* ── LOGIN/SIGNUP ── */
+@media (max-width: 768px) {
+  .auth-page {
+    flex-direction: column !important;
+  }
+  .auth-left {
+    padding: 32px 24px !important;
+    min-height: auto !important;
+  }
+  .auth-left h1 {
+    font-size: 24px !important;
+  }
+  .auth-right {
+    width: 100% !important;
+    padding: 24px 20px !important;
+  }
+  .auth-features {
+    display: none !important;
+  }
+}
+
+/* ── LOCATIONS/PRICING/ABOUT ── */
+@media (max-width: 768px) {
+  .page-hero {
+    padding: 48px 20px !important;
+  }
+  .three-grid {
+    grid-template-columns: 1fr !important;
+    padding: 32px 20px !important;
+  }
+  .two-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .pricing-grid {
+    grid-template-columns: 1fr !important;
+    padding: 32px 20px !important;
   }
 }

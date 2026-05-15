@@ -41,21 +41,21 @@ function Signup({ onLogin }) {
   }
 
   return (
-    <div style={styles.page}>
-      <div style={styles.left}>
+    <div className="auth-page"style={styles.page}>
+      <div className="auth-left" style={styles.left}>
         <div style={styles.logo} onClick={() => navigate('/')}>
           Drive<span style={styles.accent}>Rex</span>
         </div>
         <h1 style={styles.heading}>Start renting premium cars today</h1>
         <p style={styles.sub}>Join 2,000+ happy DriveRex customers across Nigeria</p>
-        <div style={styles.features}>
-          <div style={styles.feature}>🚗 Access to 48+ cars</div>
-          <div style={styles.feature}>⚡ Book in under 2 minutes</div>
-          <div style={styles.feature}>🔒 Secure payments</div>
-          <div style={styles.feature}>🇳🇬 Available in Abuja & Lagos</div>
+        <div className="auth-features"style={styles.features}>
+          <div className="auth-features"style={styles.feature}>🚗 Access to 48+ cars</div>
+          <div className="auth-features"style={styles.feature}>⚡ Book in under 2 minutes</div>
+          <div className="auth-features"style={styles.feature}>🔒 Secure payments</div>
+          <div className="auth-features"style={styles.feature}>🇳🇬 Available in Abuja & Lagos</div>
         </div>
       </div>
-      <div style={styles.right}>
+      <div className="auth-right"style={styles.right}>
         <div style={styles.card}>
           <h2 style={styles.title}>Create account</h2>
           <p style={styles.cardSub}>Free to join, no credit card required</p>
