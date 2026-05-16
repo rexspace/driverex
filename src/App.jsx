@@ -12,6 +12,7 @@ import About from './pages/About'
 import Locations from './pages/Locations'
 import Pricing from './pages/Pricing'
 import VerifyEmail from './pages/VerifyEmail'
+import MyBookings from './pages/MyBookings'
 
 function PageLoader() {
   return (
@@ -109,6 +110,7 @@ function App() {
           </PageWrapper>
         } />
         <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/my-bookings" element={<MyBookings />} />
       </Routes>
     </BrowserRouter>
   )

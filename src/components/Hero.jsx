@@ -45,7 +45,7 @@ function Hero() {
             <label style={styles.label}>Pick-up location</label>
             <input style={styles.input} placeholder="Abuja, FCT" />
           </div>
-          <div style={styles.row}>
+          <div classname ="search-row" style={styles.row}>
             <div style={styles.field}>
               <label style={styles.label}>From</label>
               <input style={styles.input} type="date" />
@@ -159,7 +159,12 @@ const styles = {
     marginBottom: '24px',
   },
   field: { marginBottom: '16px', flex: 1 },
-  row: { display: 'flex', gap: '12px' },
+  row: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '12px',
+    marginBottom: '16px',
+  },
   label: {
     display: 'block',
     fontSize: '12px',
