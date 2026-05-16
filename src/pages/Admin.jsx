@@ -17,9 +17,12 @@ function Admin() {
 
   useEffect(() => {
     if (!user) { navigate('/login'); return }
+    if (localStorage.getItem('is_admin') !== 'true') {
+      navigate('/')
+      return
+    }
     fetchAll()
   }, [])
-
   const fetchAll = async () => {
     const [statsRes, bookingsRes, carsRes] = await Promise.all([
       fetch('https://driverex-backend.onrender.com/admin/stats'),

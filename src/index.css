@@ -184,4 +184,20 @@ select {
   appearance: auto;
   text-align: left;
 }
+@media (max-width: 768px) {
+  .dashboard-stats {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .booking-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .booking-card-right {
+    width: 100% !important;
+    text-align: left !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+}
 }

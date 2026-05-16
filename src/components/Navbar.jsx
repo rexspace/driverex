@@ -31,7 +31,10 @@ function Navbar({ user, onLogout }) {
         <li style={styles.link} onMouseEnter={e => e.target.style.color='#0a0a0a'} onMouseLeave={e => e.target.style.color='#6b7280'} onClick={() => navigate('/locations')}>Locations</li>
         <li style={styles.link} onMouseEnter={e => e.target.style.color='#0a0a0a'} onMouseLeave={e => e.target.style.color='#6b7280'} onClick={() => navigate('/pricing')}>Pricing</li>
         <li style={styles.link} onMouseEnter={e => e.target.style.color='#0a0a0a'} onMouseLeave={e => e.target.style.color='#6b7280'} onClick={() => navigate('/about')}>About</li>
-        <li style={styles.link} onMouseEnter={e => e.target.style.color='#0a0a0a'} onMouseLeave={e => e.target.style.color='#6b7280'} onClick={() => navigate('/admin')}>Admin</li>
+        {/* Desktop - only show admin if admin user */}
+{localStorage.getItem('is_admin') === 'true' && (
+  <li style={styles.link} onClick={() => navigate('/admin')}>Admin</li>
+)}
       </ul>
 
       <div className="nav-auth">
@@ -60,7 +63,10 @@ function Navbar({ user, onLogout }) {
           <div style={styles.mobileLink} onClick={() => { navigate('/locations'); setMenuOpen(false) }}>Locations</div>
           <div style={styles.mobileLink} onClick={() => { navigate('/pricing'); setMenuOpen(false) }}>Pricing</div>
           <div style={styles.mobileLink} onClick={() => { navigate('/about'); setMenuOpen(false) }}>About</div>
-          <div style={styles.mobileLink} onClick={() => { navigate('/admin'); setMenuOpen(false) }}>Admin</div>
+         {/* Mobile - only show admin if admin user */}
+{localStorage.getItem('is_admin') === 'true' && (
+  <div style={styles.mobileLink} onClick={() => { navigate('/admin'); setMenuOpen(false) }}>Admin</div>
+)}
           <div style={styles.mobileDivider}></div>
           {user ? (
             <>
@@ -84,12 +90,12 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '18px 48px',
+    padding: '18px 24px',
     backgroundColor: '#ffffff',
     borderBottom: '1px solid #f0f0f0',
     position: 'sticky',
     top: 0,
-    zIndex: 100,
+    zIndex: 1000,
     flexWrap: 'wrap',
   },
   logo: { fontWeight: '800', fontSize: '22px', color: '#0a0a0a', letterSpacing: '-0.5px', cursor: 'pointer' },
@@ -103,7 +109,22 @@ const styles = {
   userName: { fontSize: '14px', color: '#374151', fontWeight: '500' },
   logoutBtn: { background: '#2563eb', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '8px', fontSize: '13px', cursor: 'pointer' },
   hamburger: { background: 'transparent', border: 'none', fontSize: '22px', cursor: 'pointer', color: '#0a0a0a', padding: '4px' },
-  mobileMenu: { width: '100%', background: 'white', borderTop: '1px solid #f0f0f0', padding: '16px 0', display: 'flex', flexDirection: 'column', gap: '4px' },
+  mobileMenu: {
+    position: 'fixed',
+    top: '60px',
+    left: 0,
+    right: 0,
+    background: 'white',
+    borderTop: '1px solid #f0f0f0',
+    padding: '16px 0',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
+    zIndex: 999,
+    boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+    maxHeight: '80vh',
+    overflowY: 'auto',
+  },
   mobileLink: { padding: '12px 24px', fontSize: '15px', color: '#374151', fontWeight: '500', cursor: 'pointer' },
   mobileDivider: { height: '1px', background: '#f0f0f0', margin: '8px 0' },
   mobileUser: { padding: '12px 24px', fontSize: '14px', color: '#6b7280' },

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
+import { usePaystackPayment } from 'react-paystack'
 
 function BookCar() {
   const { carId } = useParams()
@@ -113,98 +114,97 @@ function BookCar() {
     setLoading(false)
   }
 
-  if (success) return (
-    <div style={styles.page}>
-      <Navbar user={user} onLogout={() => {
-        localStorage.removeItem('token')
-        localStorage.removeItem('name')
-        navigate('/')
-      }} />
-      <div className="success-page" style={styles.successPage}>
-        <div className="success-card" style={styles.successCard}>
-          <div style={styles.successIcon}>🎉</div>
-          <h2 style={styles.successTitle}>
-  Booking Request Submitted
-</h2>
-<p style={styles.successSub}>
-  Your booking request for the {car?.name}
-  has been submitted successfully.
-
-  Our team will review your information
-  and contact you shortly to confirm
-  availability and payment.
-</p>
-          <div className="total-box" style={styles.totalBox}>
-            <span style={styles.totalLabel}>Total amount</span>
-            <span style={styles.totalPrice}>₦{totalPrice.toLocaleString()}</span>
+  if (success) {
+    const config = {
+      reference: `DRIVEREX-${Date.now()}`,
+      email: localStorage.getItem('email') || 'customer@driverex.com',
+      amount: totalPrice * 100, // Paystack uses kobo
+      publicKey: 'pk_test_7f8559490a874493bd219c68fc7c2a1ad0c77919',
+      metadata: {
+        car_name: car?.name,
+        pickup_date: pickupDate,
+        return_date: returnDate,
+        customer_name: user,
+      }
+    }
+  
+    function PaystackButton() {
+      const initializePayment = usePaystackPayment(config)
+      return (
+        <button
+          style={styles.paystackBtn}
+          onClick={() => {
+            initializePayment(
+              (reference) => {
+                alert(`Payment successful! Reference: ${reference.reference}\nWe will confirm your booking shortly.`)
+              },
+              () => {
+                alert('Payment cancelled.')
+              }
+            )
+          }}
+        >
+          💳 Pay Online with Paystack
+        </button>
+      )
+    }
+  
+    return (
+      <div style={styles.page}>
+        <Navbar user={user} onLogout={() => {
+          localStorage.removeItem('token')
+          localStorage.removeItem('name')
+          navigate('/')
+        }} />
+        <div style={styles.successPage}>
+          <div style={styles.successCard}>
+            <div style={styles.successIcon}>🎉</div>
+            <h2 style={styles.successTitle}>Booking Request Submitted</h2>
+            <p style={styles.successSub}>
+              Your booking for {car?.name} from {pickupDate} to {returnDate} has been submitted.
+              Complete payment to confirm your reservation.
+            </p>
+            <div style={styles.totalBox}>
+              <span style={styles.totalLabel}>Total amount</span>
+              <span style={styles.totalPrice}>₦{totalPrice.toLocaleString()}</span>
+            </div>
+            <div style={styles.statusBox}>
+              <span style={styles.statusBadge}>Pending Payment</span>
+              <p style={styles.statusText}>
+                Complete payment below to secure your booking.
+              </p>
+            </div>
+  
+            <p style={styles.paymentTitle}>Complete your payment</p>
+            <p style={styles.paymentSub}>Choose how you want to pay</p>
+  
+            <button
+              style={styles.whatsappBtn}
+              onClick={() => {
+                const message = `Hello DriveRex! 👋\n\nI just submitted a booking request.\n\n*Customer Information*\n👤 Name: ${user}\n📞 Phone: ${formData.phone_number}\n📍 State: ${formData.state}\n\n*Rental Details*\n🚗 Car: ${car?.name}\n📅 Pickup: ${pickupDate}\n📅 Return: ${returnDate}\n💰 Total: ₦${totalPrice.toLocaleString()}\n\n*Driver Information*\n🪪 Has License: ${formData.has_license ? 'Yes' : 'No'}\n🚘 Needs Driver: ${formData.needs_driver ? 'Yes' : 'No'}\n\nPlease confirm availability and payment details. Thank you!`
+                window.open(`https://wa.me/2348163458818?text=${encodeURIComponent(message)}`, '_blank')
+              }}
+            >
+              <span style={styles.whatsappIcon}>💬</span>
+              Pay via WhatsApp
+            </button>
+  
+            <div style={styles.orDivider}>
+              <div style={styles.orLine}></div>
+              <span style={styles.orText}>or</span>
+              <div style={styles.orLine}></div>
+            </div>
+  
+            <PaystackButton />
+  
+            <button style={styles.backBtn} onClick={() => navigate('/')}>
+              Back to Home
+            </button>
           </div>
-          <div style={styles.statusBox}>
-  <span style={styles.statusBadge}>
-    Pending Review
-  </span>
-
-  <p style={styles.statusText}>
-    Your booking is currently under review.
-    Please complete payment via WhatsApp
-    to secure your reservation.
-  </p>
-</div>
-          <p style={styles.paymentTitle}>Complete your payment</p>
-          <p style={styles.paymentSub}>Choose how you want to pay</p>
-
-          <button
-            style={styles.whatsappBtn}
-            onClick={() => {
-              const message = `Hello Driverex! 👋
-
-              I just submitted a booking request.
-              
-              *Customer Information*
-              👤 Name: ${user}
-              📞 Phone: ${formData.phone_number}
-              📍 State: ${formData.state}
-              
-              *Rental Details*
-              🚗 Car: ${car?.name}
-              📅 Pickup: ${pickupDate}
-              📅 Return: ${returnDate}
-              💰 Total: ₦${totalPrice.toLocaleString()}
-              
-              *Driver Information*
-              🪪 Has License: ${formData.has_license ? 'Yes' : 'No'}
-              🚘 Needs Driver: ${formData.needs_driver ? 'Yes' : 'No'}
-              
-              Please confirm availability and payment details.
-              Thank you!`
-              const encodedMessage = encodeURIComponent(message)
-              window.open(`https://wa.me/2348163458818?text=${encodedMessage}`, '_blank')
-            }}
-          >
-            <span style={styles.whatsappIcon}>💬</span>
-            Pay via WhatsApp
-          </button>
-
-          <div style={styles.orDivider}>
-            <div style={styles.orLine}></div>
-            <span style={styles.orText}>or</span>
-            <div style={styles.orLine}></div>
-          </div>
-
-          <button
-            style={styles.paystackBtn}
-            onClick={() => alert('Paystack coming soon!')}
-          >
-            💳 Pay Online with Paystack
-          </button>
-
-          <button style={styles.backBtn} onClick={() => navigate('/')}>
-            Back to Home
-          </button>
         </div>
       </div>
-    </div>
-  )
-
+    )
+  }
   if (!car) return (
     <div style={styles.page}>
       <Navbar user={user} onLogout={() => navigate('/')} />
