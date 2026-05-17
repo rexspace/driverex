@@ -19,17 +19,17 @@ function Login({ onLogin }) {
       })
       const data = await response.json()
       if (!response.ok) {
-        setError(data.detail)
+        setError(data.detail || 'Login failed')
         setLoading(false)
         return
       }
-      localStorage.setItem('token', loginData.token)
-      localStorage.setItem('name', loginData.name)
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('name', data.name)
       localStorage.setItem('email', email)
-      localStorage.setItem('is_admin', loginData.is_admin)
-            onLogin(data.name)
+      localStorage.setItem('is_admin', data.is_admin)
+      onLogin(data.name)
     } catch (err) {
-      setError('Something went wrong')
+      setError(`Error: ${err.message}`)
       setLoading(false)
     }
   }
