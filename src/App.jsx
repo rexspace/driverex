@@ -13,6 +13,8 @@ import Locations from './pages/Locations'
 import Pricing from './pages/Pricing'
 import VerifyEmail from './pages/VerifyEmail'
 import MyBookings from './pages/MyBookings'
+import CarDetail from './pages/CarDetail'
+
 
 function PageLoader() {
   return (
@@ -111,6 +113,7 @@ function App() {
         } />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/my-bookings" element={<MyBookings />} />
+        <Route path="/cars/:carId" element={<CarDetail />} />
       </Routes>
     </BrowserRouter>
   )

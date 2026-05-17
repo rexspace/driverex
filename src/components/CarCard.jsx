@@ -18,7 +18,7 @@ function CarCard({ id, name, type, seats, price, rating, trips, emoji, badge, im
       e.currentTarget.style.borderColor = '#f0f0f0'
     }}
   >
-      <div style={styles.imgBox}>
+      <div style={styles.imgBox}  onClick={() => navigate(`/cars/${id}`)}>
         {image_url ? (
           <img src={image_url} alt={name} style={styles.img} />
         ) : (
@@ -27,7 +27,12 @@ function CarCard({ id, name, type, seats, price, rating, trips, emoji, badge, im
         <div style={styles.badge}>{badge}</div>
       </div>
       <div style={styles.info}>
-        <div style={styles.name}>{name}</div>
+      <div
+  style={{...styles.name, cursor: 'pointer'}}
+  onClick={() => navigate(`/cars/${id}`)}
+>
+  {name}
+</div>
         <div style={styles.type}>{type}</div>
         <div style={styles.features}>
           <span style={styles.feature}>👤 {seats} seats</span>
