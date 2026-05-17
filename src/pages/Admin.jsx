@@ -169,37 +169,65 @@ function Admin() {
           </div>
         )}
 
-        {/* BOOKINGS TAB */}
-        {activeTab === 'bookings' && (
+{activeTab === 'bookings' && (
+  <div>
+    <h1 style={styles.pageTitle}>All Bookings</h1>
+    <p style={styles.pageSub}>{bookings.length} total bookings</p>
+    <div style={styles.table}>
+      <div style={{...styles.tableHeader, gridTemplateColumns: '1.5fr 1.5fr 1fr 1fr 1fr 1.5fr'}}>
+        <span>Customer</span>
+        <span>Car</span>
+        <span>Pickup</span>
+        <span>Return</span>
+        <span>Amount</span>
+        <span>Status</span>
+      </div>
+      {bookings.map(b => (
+        <div key={b.id} style={{...styles.tableRow, gridTemplateColumns: '1.5fr 1.5fr 1fr 1fr 1fr 1.5fr'}}>
           <div>
-            <h1 style={styles.pageTitle}>All Bookings</h1>
-            <p style={styles.pageSub}>{bookings.length} total bookings</p>
-            <div style={styles.table}>
-              <div style={styles.tableHeader}>
-                <span>Customer</span>
-                <span>Car</span>
-                <span>Pickup</span>
-                <span>Return</span>
-                <span>Amount</span>
-                <span>Status</span>
-              </div>
-              {bookings.map(b => (
-                <div key={b.id} style={styles.tableRow}>
-                  <div>
-                    <div style={styles.customerName}>{b.customer_name}</div>
-                    <div style={styles.customerEmail}>{b.customer_email}</div>
-                  </div>
-                  <span>{b.car_emoji} {b.car_name}</span>
-                  <span>{b.pickup_date}</span>
-                  <span>{b.return_date}</span>
-                  <span style={styles.amount}>₦{b.total_price.toLocaleString()}</span>
-                  <span style={styles.status}>{b.status}</span>
-                </div>
-              ))}
-            </div>
+            <div style={styles.customerName}>{b.customer_name}</div>
+            <div style={styles.customerEmail}>{b.customer_email}</div>
           </div>
-        )}
-
+          <span>{b.car_emoji} {b.car_name}</span>
+          <span>{b.pickup_date}</span>
+          <span>{b.return_date}</span>
+          <span style={styles.amount}>₦{b.total_price.toLocaleString()}</span>
+          <div style={styles.statusCell}>
+            <span style={{
+              ...styles.status,
+              background: b.status === 'confirmed' ? '#d1fae5' :
+                         b.status === 'completed' ? '#e0e7ff' :
+                         b.status === 'cancelled' ? '#fee2e2' : '#fef3c7',
+              color: b.status === 'confirmed' ? '#065f46' :
+                     b.status === 'completed' ? '#3730a3' :
+                     b.status === 'cancelled' ? '#991b1b' : '#92400e',
+            }}>
+              {b.status}
+            </span>
+            <select
+              style={styles.statusSelect}
+              value={b.status}
+              onChange={async (e) => {
+                const newStatus = e.target.value
+                await fetch(`https://driverex-backend.onrender.com/bookings/${b.id}/status`, {
+                  method: 'PUT',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ status: newStatus })
+                })
+                fetchAll()
+              }}
+            >
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
         {/* CARS TAB */}
         {activeTab === 'cars' && (
           <div>
@@ -639,6 +667,21 @@ const styles = {
     fontWeight: '600',
     cursor: 'pointer',
     marginRight: '8px',
+  },
+  statusCell: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '6px',
+  },
+  statusSelect: {
+    padding: '6px 10px',
+    borderRadius: '8px',
+    border: '1.5px solid #e5e7eb',
+    fontSize: '12px',
+    background: 'white',
+    color: '#374151',
+    cursor: 'pointer',
+    outline: 'none',
   },
 }
 
